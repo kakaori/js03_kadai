@@ -1,4 +1,4 @@
-const step02Themewords = ["机", "椅子", "本", "鉛筆", "ペン", "ノート", "カバン", "時計", "カレンダー", "ガラス", "ドア", "窓", "テレビ", "冷蔵庫", "電子レンジ", "扇風機", "照明", "洗濯機", "ソファ", "クッション",
+const themewords = ["机", "椅子", "本", "鉛筆", "ペン", "ノート", "カバン", "時計", "カレンダー", "ガラス", "ドア", "窓", "テレビ", "冷蔵庫", "電子レンジ", "扇風機", "照明", "洗濯機", "ソファ", "クッション",
 "ベッド", "枕", "布団", "掃除機", "ダストパン", "箒", "ゴミ箱", "ハンカチ", "財布", "靴", "傘", "スカーフ", "ジーンズ", "シャツ", "靴下", "時計", "財布", "バッグ", "カメラ",
 "イヤホン", "ヘッドフォン", "マウス", "キーボード", "スマートフォン", "モバイルバッテリー", "ゲーム", "ベッドルーム", "リビングルーム", "ダイニングルーム", "キッチン", "バスルーム", "トイレ", "シャワー", "バスタブ", "洗面台", "鏡", "タオル",
 "シャンプー", "コンディショナー", "ボディーソープ", "歯磨き粉", "歯ブラシ", "トイレットペーパー", "ティッシュ", "ソース", "醤油", "ケチャップ", "マヨネーズ", "マスタード", "ハチミツ", "ソーセージ", "ハム", "チーズ", "ヨーグルト", "卵", "パン",
@@ -6,16 +6,10 @@ const step02Themewords = ["机", "椅子", "本", "鉛筆", "ペン", "ノート
 "ピザ", "ハンバーガー", "サンドイッチ", "寿司", "ラーメン", "カレー", "焼肉", "しゃぶしゃぶ", "鍋", "天ぷら", "唐揚げ", "焼き鳥", "串カツ", "たこ焼き", "お好み焼き", "フライドチキン", "ステーキ", "ホットドッグ", "タコス"];
 
 
-const step03Themewords = ["携帯電話", "テレビ", "コーヒーカップ", "鍋", "自転車", "本", "ペン", "時計", "眼鏡", "カレンダー", "ランプ", "椅子", "テーブル", "車", "鍵", "財布", "バッグ", "コンピューター", "ドア", "窓",
-"リモコン", "ノートパソコン", "エアコン", "冷蔵庫", "電子レンジ", "洗濯機", "扇風機", "照明", "ゴミ箱", "時計", "洗剤", "歯ブラシ", "トイレットペーパー", "ティッシュ", "ガラス", "植木鉢", "花瓶",
-"パソコン", "メガネ", "ヘッドフォン", "マウス", "キーボード", "スマートフォン", "モバイルバッテリー", "モバイル", "カメラ", "イヤホン", "ノート", "ハンカチ", "コート", "靴", "傘", "スカーフ",
-"時計", "財布", "バッグ", "ジーンズ", "シャツ", "靴下", "ベッド", "枕", "布団", "掃除機", "ダストパン", "ほうき", "箒", "ビデオゲーム", "ソファ", "クッション", "カーペット", "カーテン",
-"スプーン", "フォーク", "ナイフ", "お皿", "コップ", "ボウル", "フライパン", "鍋", "ケトル", "トースター", "ブレンダー", "オーブン", "缶切り", "包丁", "まな板", "計量カップ", "保存容器",
-"ポット", "パン", "カップケーキ", "ホットドッグ", "ピザ", "アイスクリーム", "チョコレート", "サラダ", "スープ", "ステーキ", "パスタ", "ラーメン", "寿司", "サンドイッチ", "ハンバーガー", "フライドポテト",
-"ピクルス", "マヨネーズ", "ケチャップ", "マスタード", "ソース", "バター", "ジャム", "ハチミツ", "ヨーグルト", "チーズ", "ミルク", "卵", "トマト", "キュウリ", "ニンジン", "レタス", "キャベツ", "ソファ", "クッション", "カーペット", "カーテン", "キッチン", "リビング", "ダイニング", "ベッドルーム", "バスルーム", "玄関", "テーブルクロス", "クロック", "コーヒーメーカー", "ティーポット", "キャンドル",
-"ホルダー", "写真立て", "家具", "テーブル", "椅子", "クッション", "キャビネット", "本棚", "シェルフ", "ベンチ", "ハンガー", "鏡", "絵画", "時計", "装飾", "花瓶", "植物", "ランプ"];
 
-
+for(let i=0; i<themewords.length; i++){
+    $("#word_list").append('<li class="py-2 px-4 mb-2 border-r">'+ themewords[i] +'</li>');
+}
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
@@ -116,9 +110,14 @@ onAuthStateChanged(auth, (user) => {
 
         //Step01 データを削除
         $("#step01_list").on("click", ".clear", function(){
-            const key = $(this).attr("data-key");
-            const remove_item = ref(db,"users/"+uid+"/spet01/"+key);
-            remove(remove_item);//firebaseデータ削除
+            let result = confirm('本当に削除しますか？');
+            if(result == true){
+                const key = $(this).attr("data-key");
+                const remove_item = ref(db,"users/"+uid+"/spet01/"+key);
+                remove(remove_item);//firebaseデータ削除
+            } else {
+                return false;
+            }
         });
         //削除処理がされたらfirebaseイベント発生
         onChildRemoved(dbRef01, (data) => {
@@ -144,11 +143,11 @@ onAuthStateChanged(auth, (user) => {
 
         //Step02
         //Step02 theme
-        const randomIndexS2 = Math.floor(Math.random() * step02Themewords.length);
-        $("#step02_theme").text(step02Themewords[randomIndexS2]);
+        const randomIndexS2 = Math.floor(Math.random() * themewords.length);
+        $("#step02_theme").text(themewords[randomIndexS2]);
         $("#step02_theme_change").on("click", function(){
-            const randomIndexS2 = Math.floor(Math.random() * step02Themewords.length);
-            $("#step02_theme").text(step02Themewords[randomIndexS2]);
+            const randomIndexS2 = Math.floor(Math.random() * themewords.length);
+            $("#step02_theme").text(themewords[randomIndexS2]);
         });
 
         //Step02 Save
@@ -196,9 +195,14 @@ onAuthStateChanged(auth, (user) => {
 
         //Step02 データを削除
         $("#step02_list").on("click", ".clear", function(){
-            const key = $(this).attr("data-key");
-            const remove_item = ref(db,"users/"+uid+"/spet02/"+key);
-            remove(remove_item);//firebaseデータ削除
+            let result = confirm('本当に削除しますか？');
+            if(result == true){
+                const key = $(this).attr("data-key");
+                const remove_item = ref(db,"users/"+uid+"/spet02/"+key);
+                remove(remove_item);//firebaseデータ削除
+            } else {
+                return false;
+            }
         });
         //削除処理がされたらfirebaseイベント発生
         onChildRemoved(dbRef02, (data) => {
@@ -234,14 +238,14 @@ onAuthStateChanged(auth, (user) => {
 
         //Step03
         //Step03 theme
-        const randomIndexS3_1 = Math.floor(Math.random() * step03Themewords.length);
-        const randomIndexS3_2 = Math.floor(Math.random() * step03Themewords.length);
-        $("#step03_theme").text(step03Themewords[randomIndexS3_1] + " & " + step03Themewords[randomIndexS3_2]);
+        const randomIndexS3_1 = Math.floor(Math.random() * themewords.length);
+        const randomIndexS3_2 = Math.floor(Math.random() * themewords.length);
+        $("#step03_theme").text(themewords[randomIndexS3_1] + " & " + themewords[randomIndexS3_2]);
 
         $("#step03_theme_change").on("click", function(){
-            const randomIndexS3_1 = Math.floor(Math.random() * step03Themewords.length);
-            const randomIndexS3_2 = Math.floor(Math.random() * step03Themewords.length);
-            $("#step03_theme").text(step03Themewords[randomIndexS3_1] + " & " + step03Themewords[randomIndexS3_2]);
+            const randomIndexS3_1 = Math.floor(Math.random() * themewords.length);
+            const randomIndexS3_2 = Math.floor(Math.random() * themewords.length);
+            $("#step03_theme").text(themewords[randomIndexS3_1] + " & " + themewords[randomIndexS3_2]);
         });
 
         //Step03 Save
@@ -285,9 +289,14 @@ onAuthStateChanged(auth, (user) => {
 
         //Step03 データを削除
         $("#step03_list").on("click", ".clear", function(){
-            const key = $(this).attr("data-key");
-            const remove_item = ref(db,"users/"+uid+"/spet03/"+key);
-            remove(remove_item);//firebaseデータ削除
+            let result = confirm('本当に削除しますか？');
+            if(result == true){
+                const key = $(this).attr("data-key");
+                const remove_item = ref(db,"users/"+uid+"/spet03/"+key);
+                remove(remove_item);//firebaseデータ削除
+            } else {
+                return false;
+            }
         });
         //削除処理がされたらfirebaseイベント発生
         onChildRemoved(dbRef03, (data) => {
